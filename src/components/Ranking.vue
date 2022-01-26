@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div class="rank-wrap">
     <table class="ranking-table">
       <thead>
         <tr>
@@ -25,14 +25,14 @@
 
 <script>
 export default {
-  name: "HelloWorld",
+  name: "Ranking",
   data() {
     return {
       allScoreData: [], // {id: Number, name: String, score: Number, isNew: Boolean}
     };
   },
   mounted() {
-    const socket = new WebSocket("ws://localhost:5001");
+    const socket = new WebSocket("ws://localhost:5002");
 
     socket.onmessage = (event) => {
       console.dir(event.data);
@@ -74,7 +74,7 @@ td {
 th {
   color: white;
 }
-.hello {
+.rank-wrap {
   padding-top: 70px;
   width: 100%;
   height: 100vh;
@@ -91,8 +91,9 @@ th {
   font-size: 30px;
   transition: all 3s;
 }
-.ranking {
+.rank {
   background: rgba(255, 0, 0, 0.815);
+  scroll-behavior: smooth;
 }
 .ranking:nth-of-type(1) {
   background: linear-gradient(

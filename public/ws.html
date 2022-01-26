@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!-- <link rel="icon" href="<%= BASE_URL %>favicon.ico"> -->
+    <title>スコア入力フォーム</title>
+  </head>
+  <body>
+    <!-- <noscript>
+      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript> -->
+    <header>WebSocket通信用フォーム</header>
+    <div id="ws_sts">WebSocket is disconnected</div>
+    <div class="ws_form">
+      <select id="ws_port" name="ws_port">
+        <option value="" selected="selected">接続先Portを選択</option>
+        <option value="1">5001</option>
+        <option value="2">5002</option>
+      </select>
+      <button id="ws_connect" class="submit">CONNECT</button>
+      <hr color="#cc6666" />
+      <div class="content-wrap">
+        <select id="team_name" name="team_name">
+          <option value="" selected="selected">Teamを選択</option>
+          <option value="1">Team1</option>
+          <option value="2">Team2</option>
+          <option value="3">Team3</option>
+          <option value="4">Team4</option>
+          <option value="5">Team5</option>
+          <option value="6">Team6</option>
+          <option value="7">Team7</option>
+          <option value="8">Team8</option>
+          <option value="9">Team9</option>
+          <option value="10">Team10</option>
+          <option value="11">Team11</option>
+          <option value="12">Team12</option>
+          <option value="13">Team13</option>
+          <option value="14">Team14</option>
+          <option value="15">Team15</option>
+          <option value="16">Team16</option>
+          <option value="17">Team17</option>
+          <option value="18">Team18</option>
+        </select>
+      </div>
+      <div class="content-wrap">
+        <input
+          type="text"
+          name="team_score"
+          id="team_score"
+          placeholder="Score"
+        /><br />
+        <button id="submit_data" class="submit">SUBMIT</button>
+      </div>
+    </div>
+
+    <!-- built files will be auto injected -->
+  </body>
+  <script>
+    //ws接続用のボタン(DOM要素)を取得
+    let port = 0000;
+    const connectBtn = document.getElementById("ws_connect");
+    let socket = "";
+    let ws_sts = document.getElementById("ws_sts");
+    //ws_coonectボタンをクリック時、指定したwsポートに接続
+    connectBtn.addEventListener("click", function (e) {
+      let num = document.getElementById("ws_port").selectedIndex;
+      port = document.getElementById("ws_port").options[num].innerText;
+      socket = new WebSocket("ws://localhost:" + port);
+      console.log(socket);
+      sts_connected();
+      ws_sts.innerText = `${port}番ポートに接続中`;
+    });
+
+    const setUserScore = (tn, sc) => {
+      const name = tn;
+      const score = sc;
+      return JSON.stringify({ name, score });
+    };
+    const submitBtn = document.getElementById("submit_data");
+    submitBtn.addEventListener("click", function (e) {
+      let team_score = 0;
+      const num = document.getElementById("team_name").selectedIndex;
+      const team_name =
+        document.getElementById("team_name").options[num].innerText;
+      team_score = document.getElementById("team_score").value;
+      // console.log(user, team_score);
+      let sendflg = confirm(
+        `次のデータを${port}番ポートに送信しますか？\n チーム名: ${team_name}, 得点:${team_score}`
+      );
+      if (sendflg) {
+        socket.send(setUserScore(team_name, team_score));
+        console.log(
+          `次のデータを${port}番ポートに送信しました。\n チーム名: ${team_name}, 得点:${team_score}`
+        );
+
+        socket.close();
+        ws_sts.innerText = "WebSocket is disconnected";
+        sts_disconnected();
+      }
+    });
+    function sts_disconnected() {
+      document.getElementById("ws_sts").style.backgroundColor = "#cf1111";
+    }
+    function sts_connected() {
+      document.getElementById("ws_sts").style.backgroundColor = "#11a3cf";
+    }
+  </script>
+  <style>
+    @import url(https://fonts.googleapis.com/css?family=Bangers);
+    @import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+    body {
+      background: rgb(30, 30, 40);
+    }
+
+    header {
+      padding-left: 20px;
+      font-size: 24px;
+      font-weight: bold;
+      font-style: italic;
+      text-align: center;
+      font-family: "Montserrat", Arial, Helvetica, sans-serif;
+      width: 90%;
+      background: #cc6666;
+      border-radius: 5px;
+      border: 0;
+      margin: 0 auto;
+      color: white;
+    }
+    hr {
+      margin: 10% auto;
+      width: 70%;
+    }
+    .ws_form {
+      max-width: 420px;
+      margin: 20px auto;
+    }
+    .content_wrap {
+      position: relative;
+      z-index: 1;
+    }
+    .content_wrap .icon {
+      position: absolute;
+      z-index: 2;
+      right: 1px;
+      top: 1px;
+      background: #fff;
+      width: 300px;
+      height: calc(100% - 2px);
+      pointer-events: none;
+    }
+
+    select,
+    input {
+      color: #ccc;
+      font-family: Helvetica, Arial, sans-serif;
+      font-weight: 500;
+      font-size: 18px;
+      border-radius: 5px;
+      line-height: 22px;
+      background-color: transparent;
+      border: 2px solid #cc6666;
+      transition: all 0.3s;
+      padding: 13px;
+      margin-bottom: 15px;
+      width: 100%;
+      box-sizing: border-box;
+      outline: 0;
+    }
+
+    .submit {
+      font-family: "Montserrat", Arial, Helvetica, sans-serif;
+      width: 100%;
+      background: #cc6666;
+      border-radius: 5px;
+      border: 0;
+      cursor: pointer;
+      color: white;
+      font-size: 24px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      transition: all 0.3s;
+      margin-top: 2px;
+      font-weight: 700;
+    }
+
+    /* ボタン */
+    #ws_sts {
+      /* color: #ccc; */
+      font-family: "Bangers", cursive;
+      height: 20px;
+      width: 80%;
+      text-align: center;
+      margin: 4% auto;
+      display: inline-block;
+      cursor: pointer;
+      background: #cf1111;
+      text-decoration: none;
+      border-radius: 10px;
+      position: relative;
+      overflow: hidden;
+      left: 10%;
+    }
+
+    /* ボタンをキラッとさせる */
+    #ws_sts::before {
+      content: "";
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: -100%;
+      background-image: linear-gradient(
+        130deg,
+        rgba(255, 255, 255, 0) 25%,
+        rgba(255, 255, 255, 0.5) 50%,
+        rgba(255, 255, 255, 0) 75%
+      );
+      /* 【変更部分】inifiniteによりずっと続ける */
+      -webkit-animation: shine 3s infinite;
+      animation: shine 3s infinite;
+    }
+
+    @-webkit-keyframes shine {
+      100% {
+        left: 100%;
+      }
+    }
+
+    @keyframes shine {
+      100% {
+        left: 100%;
+      }
+    }
+  </style>
+</html>
