@@ -2,9 +2,9 @@
 
 <template>
   <div class="container">
-    <div class="score_board" v-for="post in allScoreData" :key="post.id">
+    <div class="score_board" v-for="post in TeamScoreData" :key="post.id">
       <p class="team_name">{{ post.name }}</p>
-      <p class="score">{{ post.score }}</p>
+      <p class="score">{{ post.score }}<span>Points</span></p>
     </div>
   </div>
 </template>
@@ -16,7 +16,7 @@ export default {
   name: "ResultPage",
   data() {
     return {
-      allScoreData: [], // {id: Number, name: String, score: Number, isNew: Boolean}
+      TeamScoreData: [], // {id: Number, name: String, score: Number, isNew: Boolean}
     };
   },
   mounted() {
@@ -30,7 +30,7 @@ export default {
   methods: {
     addData(data) {
       // 既存のスコアのisNewをfalseにする (= 新規レコードのフラグを外す)
-      const list = this.allScoreData.map((val) => {
+      const list2 = this.TeamScoreData.map((val) => {
         return {
           id: val.id,
           name: val.name,
@@ -38,17 +38,21 @@ export default {
           isNew: false,
         };
       });
-      console.log(list);
+      console.log(list2);
 
-      list.push({
-        id: list.length + 1,
+      list2.push({
+        id: list2.length + 1,
         name: data.name,
         score: Number(data.score),
         isNew: true,
       });
 
+      if (list2.length >= 2) {
+        list2.shift();
+      }
+
       // 並び順をスコアの降順に変更
-      this.allScoreData = list;
+      this.TeamScoreData = list2;
     },
   },
 };
@@ -57,7 +61,11 @@ export default {
 <style>
 /* Google Fonts 読み込み */
 @import url("https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap");
-
+span {
+  padding-left: 20px;
+  font-size: 20px;
+  letter-spacing: 0px;
+}
 /* 全体を囲うコンテナー */
 .container {
   width: 100%;
@@ -71,18 +79,28 @@ export default {
 
 .score_board {
   font-family: "Share Tech Mono", monospace;
-  color: #daf6ff;
-  text-shadow: 0 0 20px #0aafe6;
+  /* color: #daf6ff;
+  text-shadow: 0 0 20px #0aafe6; */
+  color: #ffe0da;
+  text-shadow: 0 0 20px #e63d0a;
   line-height: 1.2;
   text-align: center;
 }
 
 .team_name {
-  font-size: 25px;
+  padding-top: 20%;
+  font-size: 10vw;
+  font-weight: bold;
+  margin-bottom: 0;
+  letter-spacing: 5px;
 }
 
 .score {
-  font-size: 100px;
+  font-size: 40vw;
+  margin-top: 0%;
+  letter-spacing: -30px;
+  margin-bottom: 20%;
+  padding-left: 5%;
 }
 
 /* 文字サイズ調整 */

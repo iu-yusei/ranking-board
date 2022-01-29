@@ -91,17 +91,45 @@ a {
   border-color: transparent transparent#fd5068 #fd5068;
   background-color: rgba(255, 255, 255, 0);
   transform: rotate(-45deg);
-  bottom: 4%;
-  left: 47%;
+  bottom: 6%;
+  /* left: 47%; */
+  right: 8%;
   /* z-index: 3; */
+  animation-name: expansion;
+  animation-duration: 2s;
+  animation-timing-function: ease-in;
+  animation-delay: 0s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+.scroll_arrow:nth-child(1) {
+  bottom: 6%;
+  animation-delay: 0s;
+  /* z-index: 2; */
 }
 .scroll_arrow:nth-child(2) {
-  bottom: 6%;
+  bottom: 8%;
+  animation-delay: 5s;
+  /* background-color: #fff; */
   /* z-index: 2; */
 }
 .scroll_arrow:nth-child(3) {
-  bottom: 8%;
+  bottom: 10%;
+  animation-delay: 10s;
   /* z-index: 1; */
+}
+
+@keyframes expansion {
+  0% {
+    border-color: transparent transparent#fd5068 #fd5068;
+    background-color: rgba(255, 255, 255, 0);
+  }
+  100% {
+    border-color: transparent transparent#f7e2e5 #f7e2e5;
+    background-color: rgba(255, 255, 255, 0);
+  }
 }
 
 /* .contents-wrap {
