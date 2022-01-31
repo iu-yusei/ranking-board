@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-    <ResultPage />
+    <ResultPage ref="child1" />
 
-    <a class="scroll_arrow" href="#ranking"></a>
-    <a class="scroll_arrow" href="#ranking"></a>
-    <a class="scroll_arrow" href="#ranking"></a>
+    <a class="scroll_arrow" href="#ranking" @click="resetFromChild()"></a>
+    <a class="scroll_arrow" href="#ranking" @click="resetFromChild()"></a>
+    <a class="scroll_arrow" href="#ranking" @click="resetFromChild()"></a>
 
     <div id="ranking">
       <Ranking />
@@ -45,6 +45,9 @@ export default {
     };
   },
   methods: {
+    resetFromChild() {
+      this.$refs.child1.reset();
+    },
     ChangeToRanking() {
       this.rankShow = true;
       this.rightArrow = false;

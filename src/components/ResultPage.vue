@@ -46,6 +46,13 @@ export default {
     };
   },
   methods: {
+    // Change to Cuntdown このメソッドをコメントアウトすれば、カウントダウン機能に切り替えることができる
+    reset() {
+      //スコアを０に戻す用のメソッド
+      // this.TeamScoreData[0].score = 0;
+      this.TeamScoreData[0].name = "";
+      this.number = 0;
+    },
     addData(data) {
       // 既存のスコアのisNewをfalseにする (= 新規レコードのフラグを外す)
       const list2 = this.TeamScoreData.map((val) => {
