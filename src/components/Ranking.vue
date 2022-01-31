@@ -1,22 +1,30 @@
 <template>
   <div class="rank-wrap">
+    <div class="ranking-header">RANKING</div>
     <table class="ranking-table">
-      <thead>
+      <!-- <thead>
         <tr>
           <th>RANK</th>
-          <th>NAME</th>
+          <th>TEAM</th>
           <th>SCORE</th>
         </tr>
-      </thead>
+      </thead> -->
       <transition-group tag="tbody">
         <tr
           class="ranking"
           v-for="(post, index) in allScoreData"
           :key="post.id"
         >
-          <td :class="{ newRecord: post.isNew }">{{ index + 1 }} 位</td>
-          <td :class="{ newRecord: post.isNew }">{{ post.name }}</td>
-          <td :class="{ newRecord: post.isNew }">{{ post.score }}</td>
+          <td :class="{ newRecord: post.isNew }">
+            <img src="../assets/oukan.png" alt="" />
+            <div id="rank">{{ index + 1 }}</div>
+          </td>
+          <td :class="{ newRecord: post.isNew }" class="team_data">
+            {{ post.name }}
+          </td>
+          <td :class="{ newRecord: post.isNew }" class="score_data">
+            {{ post.score }}
+          </td>
         </tr>
       </transition-group>
     </table>
@@ -67,72 +75,168 @@ export default {
 
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap");
+.ranking-header {
+  /* background: #f72d2d; */
+  color: white;
+  font-size: 55px;
+  text-align: center;
+  font-family: "Share Tech Mono", monospace;
+  padding-top: 3%;
+  font-weight: bold;
+  letter-spacing: 8px;
+  margin-bottom: 1%;
+}
 
 table {
   border-collapse: collapse;
+  overflow: hidden;
+  border-spacing: 0px;
 }
 
 td {
   font-weight: bold;
-  font-size: 25px;
-  color: black;
-  font-style: italic;
-  padding: 10px;
+  color: white;
+  /* font-style: italic; */
+  padding: 5px;
+  /* border: 1px solid; */
+  /* border-color: #f72d2d; */
+  /* border-color: #fff; */
 }
 th {
-  color: #fd5068;
+  /* color: #fd5068; */
+  color: #fff;
+  text-shadow: 0 0 5px #e63d0a;
   font-family: "Share Tech Mono", monospace;
   /* color: #daf6ff;
   text-shadow: 0 0 20px #0aafe6; */
   /* color: #ffe0da; */
-  text-shadow: 0 0 20px #e63d0a;
-  font-size: 30px;
+  font-size: 40px;
   font-style: italic;
-  padding-bottom: 3%;
+  padding-bottom: 2%;
 }
 
 .rank-wrap {
-  padding-top: 70px;
+  margin-top: 0;
+  padding-left: 20px;
   width: 100%;
   height: 100vh;
-  /* background-color: #000; */
+  background-image: url("../assets/bg1.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .ranking-table {
   margin: auto;
-  width: 80vw;
+  width: 75vw;
 }
 .newRecord {
-  border: 0px none;
-  font-weight: bold;
+  /* font-weight: bold; */
   /* font-size: 30px; */
   transition: all 3s;
 }
-.rank {
-  background: rgba(255, 0, 0, 0.815);
-  scroll-behavior: smooth;
-}
+
 .ranking {
-  background: #f72d2d;
+  /* background: #f72d2d; */
+  background: #fff;
+  /* color: black; */
+  font-size: 35px;
+  display: block;
+  margin-bottom: 2%;
+}
+
+td {
+  color: black;
 }
 .ranking:nth-of-type(1) {
-  border-color: #fd5068;
- /* font-family: "Bangers", cursive; */
-      /* height: 20px; */
-      /* width: 213.5%; */
-      text-align: center;
-      /* margin: 4% auto; */
-      /* display: inline-block; */
-      /* cursor: pointer; */
-      /* background: #cf1111; */
-      text-decoration: none;
-      /* border-radius: 10px; */
-      position: relative;
-      overflow: hidden;
-      /* left: 10%; */
+  font-size: 40px;
+  /* font-family: "Bangers", cursive; */
+  text-align: center;
+  /* text-shadow: 0 0 20px #e63d0a; */
+  font-weight: bold;
 
-  /* background: linear-gradient(
-    45deg,
+  text-decoration: none;
+
+  position: relative;
+
+  transition: all 0.8s;
+}
+td:nth-of-type(1) {
+  width: 200px;
+  background: #000;
+  color: white;
+  /* align-content: center; */
+}
+td:nth-of-type(2) {
+  width: 60%;
+}
+td:nth-of-type(3) {
+  width: 20%;
+}
+
+
+td:nth-of-type(1) img {
+  /* position: absolute;
+  top: -5%;
+  left: 10%; */
+  display: inline-block;
+  width: 50px;
+}
+.ranking:nth-of-type(2n) td:nth-of-type(1) img {
+  display: none;
+}
+.ranking:nth-of-type(3n) td:nth-of-type(1) img {
+  display: none;
+}
+.ranking:nth-of-type(5n) td:nth-of-type(1) img {
+  display: none;
+}
+.ranking:nth-of-type(7n) td:nth-of-type(1) img {
+  display: none;
+}
+#rank {
+  display: inline-block;
+  position: relative;
+  top: -8px;
+  left: 2px;
+  font-size: 40px;
+}
+.ranking:nth-of-type(2n) td:nth-of-type(1) #rank {
+  font-size: 30px;
+  top: 2%;
+}
+.ranking:nth-of-type(3n) td:nth-of-type(1) #rank {
+  font-size: 30px;
+  top: 2%;
+}
+.ranking:nth-of-type(5n) td:nth-of-type(1) #rank {
+  font-size: 30px;
+  top: 2%;
+}
+.ranking:nth-of-type(7n) td:nth-of-type(1) #rank {
+  font-size: 30px;
+  top: 2%;
+}
+
+
+
+td:nth-of-type(3) {
+  background-image: linear-gradient(
+    135deg,
+    #e2d02a 0%,
+    #f7d334 37%,
+    #f7ea34 47%,
+    #f3f317 50%,
+    #e0e016 53%,
+    #e1ce08 63%,
+    #b8751e 100%
+  );
+  -webkit-background-clip: text;
+  color: transparent;
+  /* text-shadow: 0 0 0px black;  */
+}
+/* .ranking:nth-of-type(1) td:nth-of-type(1) {
+  background: linear-gradient(
+    135deg,
     #b67b03 0%,
     #daaf08 15%,
     #fee9a0 23%,
@@ -148,9 +252,8 @@ th {
     #fee9a0 89%,
     #daaf08 94%,
     #b67b03 97% 100%
-  ) !important; */
-  transition: all 0.8s;
-}
+  ) !important;
+} */
 .ranking:nth-of-type(1)::after {
   content: "";
   display: block;
@@ -165,7 +268,7 @@ th {
     rgba(255, 255, 255, 0.5) 50%,
     rgba(255, 255, 255, 0) 75%
   );
-  
+
   /* 【変更部分】inifiniteによりずっと続ける */
   -webkit-animation: shine 3s infinite;
   animation: shine 3s infinite;

@@ -71,10 +71,9 @@ export default {
   color: #d0d5da;
   margin: 0;
   width: 100%;
-  scroll-behavior: smooth;
 }
 #ranking {
-  padding-top: 40px;
+  /* padding-top: 40px; */
   background-color: #000;
 }
 a {
