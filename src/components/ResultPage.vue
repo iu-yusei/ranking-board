@@ -4,21 +4,39 @@
   <div class="container">
     <div class="score_board" v-for="post in TeamScoreData" :key="post.id">
       <p class="team_name">{{ post.name }}</p>
-      <p class="score">{{ post.score }}<span>Points</span></p>
+      <p class="score">{{ scoreData }}<span>Points</span></p>
     </div>
+    <!-- <audio id="sound"> 
+      <source src="omikuji.mp3" type="audio/mp3">
+    </audio>  -->
   </div>
 </template>
 
 <script>
 //  点数出力ページ
-
+import gsap from "gsap";
 export default {
   name: "ResultPage",
+  // el: "#score",
   data() {
     return {
       TeamScoreData: [], // {id: Number, name: String, score: Number, isNew: Boolean}
+      tweenedNumber: 0,
+      number: 0,
+      document: document,
     };
   },
+  computed: {
+    scoreData: function () {
+      return this.tweenedNumber.toFixed(0); //小数点を削除するため toFixedを使用
+    },
+  },
+  watch: {
+    number: function (newValue) {
+      gsap.to(this.$data, { duration: 2, tweenedNumber: newValue });
+    },
+  },
+
   mounted() {
     const socket = new WebSocket("ws://localhost:5001");
 
@@ -38,7 +56,6 @@ export default {
           isNew: false,
         };
       });
-      console.log(list2);
 
       list2.push({
         id: list2.length + 1,
@@ -46,14 +63,19 @@ export default {
         score: Number(data.score),
         isNew: true,
       });
+      console.log(list2[0].score);
 
       if (list2.length >= 2) {
         list2.shift();
       }
-
       // 並び順をスコアの降順に変更
       this.TeamScoreData = list2;
+      console.log("before", this.$el.innerHTML);
+      this.$nextTick(() => (this.number = this.TeamScoreData[0].score));
     },
+    // audioPlay() {
+    //   document.getElementById("sound").play();
+    // },
   },
 };
 </script>
