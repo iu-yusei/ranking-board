@@ -118,7 +118,7 @@ span {
 
 .team_name {
   padding-top: 20%;
-  font-size: 10vw;
+  font-size: 8vw;
   font-weight: bold;
   margin-bottom: 0;
   letter-spacing: 5px;
