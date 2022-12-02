@@ -2,13 +2,6 @@
   <div class="rank-wrap">
     <div class="ranking-header">RANKING</div>
     <table class="ranking-table">
-      <!-- <thead>
-        <tr>
-          <th>RANK</th>
-          <th>TEAM</th>
-          <th>SCORE</th>
-        </tr>
-      </thead> -->
       <transition-group tag="tbody">
         <tr
           class="ranking"
